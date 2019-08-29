@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{execute(graphics,show_site_title)}</title>
+	<base href="{const(ADMIN_WEB_PATH)}"/>
+	<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+{exec_last(assets,show_css)}
+{execute(graphics,show_metatags)}
+</head>
+<body class="{execute(common,css_class_body)}">
+{if(conf.css_framework eq bs3)}
+	<div class="navbar navbar-default">
+{else}
+	<div class="navbar navbar-default navbar-inverse">
+{/if}
+		<div class="navbar-inner navbar-header container" style="width:100%">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbar-collapse-1">
+				<span class="breadcrumb">
+					{execute(site_nav_bar,_show)}
+				</span>
+				<div class="bar-button-inline">
+					{execute(site_nav_bar,_show_dropdown_menu)}
+					<ul class="nav navbar-nav pie">
+						{if_ok(conf.admin_search_navbar)} {include(admin_search/navbar)} {/if}
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle user-button" data-toggle="dropdown" role="button"><i class="fa fa-user"></i> <span class="caret"></span></a>
+							<ul class="dropdown-menu" style="left: -100px">
+								<li class="dropdown-header">{t(Account)}</li>
+								<li>{execute(graphics,show_welcome)}</li>
+								<li role="separator" class="divider"></li>
+								<li><a href="{url(/admin_account)}">{t(Edit account)}</a></li>
+								<li><a href="{url(/admin_wall)}">{t(Wall)}</a></li>
+								<li><a href="{url(/admin_home)}">{t(Home)}</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="./?task=logout" title="{t(Logout)}" target="_parent"><i class="icon-signout fa fa-sign-out"></i>&nbsp;{t(Logout)}</a></li>
+							</ul>
+						</li>
+					</ul>
+			</div>
+			</div>
+		</div>
+	</div>
+{block(left_area)}
+	<div class="container container-fixed center_area">
+{execute(common,show_messages)}
+{block(center_area)}
+	</div>
+{exec_last(assets,show_js)}
+</body>
+</html>

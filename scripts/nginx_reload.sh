@@ -1,0 +1,1 @@
+docker-compose exec nginx bash -c 'nginx -t && nginx -s reload;'

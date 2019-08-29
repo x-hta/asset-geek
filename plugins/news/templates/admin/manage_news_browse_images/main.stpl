@@ -1,0 +1,23 @@
+<div class="container container-fixed center_area">
+	<h3>{t(Доступные изображения для этой статьи)}</h3>
+{if('items' ne '')}
+		<div class="row">
+{foreach('items')}
+		<div class="col-md-3">
+			<small><b>{#.name}</b></small><br />
+			<img src="{#.url}" width=200><br />
+			<small><b>{t(Размер)}:</b> {#.size}</small><br />
+			<small><b>{t(Разр-е)}:</b> {#.resolution}</small><br />
+			<small><b>{t(Добавлено)}:</b> {#.add_date}</small><br />
+			<small><a href="{#.select_url}" class="btn btn-xs btn-primary">{t(Выбрать)}</a>
+				<a href="{#.delete_url}" onclick="return confirm('{t(Вы уверены?)}');" class="btn btn-xs btn-danger">{t(Удалить)}</a>
+			</small><br />
+			<br /><br />
+		</div>
+	{if('#.do_clear' eq '1')}</div><div class="row">{/if}
+{/foreach}
+		</div>
+{else}
+		<div class="alert alert-info">{t(Для этой статьи не загружено ни одного изображения)}</div>
+{/if}
+</div>

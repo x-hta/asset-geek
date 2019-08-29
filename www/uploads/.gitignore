@@ -1,0 +1,14 @@
+site_map/*
+smi/
+shop/
+12/
+tmp_avatars/
+images/faq/*
+
+blog/*
+blog_authors/*
+blog_previews/*
+news_previews/*
+cdn_cache/*
+ck_browser/*
+github_cache/*

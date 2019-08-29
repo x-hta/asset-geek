@@ -1,0 +1,16 @@
+<div class="bg-full-news">
+    <div class="container full-news">
+        <div class="col-md-12 tags-view">
+			
+			<div class="topic-title-tab">
+				<span style="text-transform:uppercase" >{tag_name}</span>
+			</div>
+
+            <div class="clearfix"></div>
+            {items_list}
+            {if_not_empty(pages)}
+            {pages}
+            {/if}
+        </div>
+    </div>
+</div>

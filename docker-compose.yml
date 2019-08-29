@@ -1,0 +1,69 @@
+version: "3"
+services:
+  nginx:
+    image: yfix/nginx
+    restart: unless-stopped
+    ports:
+      - "26080:80"
+      - "26043:443"
+    links:
+      - php
+      - redis
+      - adminer
+    depends_on:
+      - php
+      - redis
+      - adminer
+    volumes:
+      - ./:/var/www/default
+      - ./docker/etc/nginx:/etc/nginx
+      - ./docker/var/log/nginx:/var/log/nginx
+
+  php:
+    image: yfix/php:7.2
+    restart: unless-stopped
+    links:
+      - mysql
+      - redis
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - ./:/var/www/default
+      - ./docker/etc/php/fpm/php-fpm.conf:/usr/local/etc/php/fpm/php-fpm.conf
+      - ./docker/etc/php/fpm/pool.d/www.conf:/usr/local/etc/php/fpm/pool.d/www.conf
+      - ./docker/var/log/php:/var/log/php
+      - ./docker/var/log/supervisor:/var/log/supervisor
+      - ./docker/etc/supervisor/conf.d/:/etc/supervisor/conf.d/
+      - ./docker/etc/cron.d/:/etc/cron.d/
+      - ./tmp/:/tmp/
+
+  mysql:
+    image: yfix/mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - ./docker/var/lib/mysql:/var/lib/mysql
+
+  redis:
+    image: yfix/redis
+    restart: unless-stopped
+    volumes:
+      - ./docker/redis-data:/data
+
+  adminer:
+    image: yfix/adminer
+    depends_on:
+      - mysql
+
+  logrotate:
+    image: yfix/logrotate
+    restart: always
+    volumes:
+      - ./docker/etc/logrotate.d/:/etc/logrotate.d/
+      - ./docker/etc/logrotate_cron.d/:/etc/cron.d/
+      - ./docker/var/log/:/var/log/

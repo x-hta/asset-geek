@@ -1,0 +1,8 @@
+{if('tags' ne '')}
+    <div class="tags-block">
+        <span class="text-teg">{t(ТЕГИ)}:</span>
+        {foreach('tags')}
+            <a href="{#.url}" class="link-tag">{#.name}</a>
+        {/foreach}
+    </div>
+{/if}
